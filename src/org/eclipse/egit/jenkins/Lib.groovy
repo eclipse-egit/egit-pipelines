@@ -87,7 +87,7 @@ class Lib implements Serializable {
 		def isRelease = ownVersion.endsWith('-r')
 		for (int i = tags.length - 1; i >= 0; i--) {
 			def t = tags[i].trim()
-			def m = t =~ /.*refs\/tags\/v(\d+\.\d+)\.(\d+)\.(\d+)(-.*)/
+			def m = t =~ /.*refs\/tags\/v(\d+\.\d+\.)(\d+)\.(\d+)(-.*)/
 			if (m && ownVersion.startsWith(m[0][1])) {
 				if (isRelease && !t.endsWith('-r')) {
 					continue
@@ -97,10 +97,10 @@ class Lib implements Serializable {
 				if (patch > max) {
 					max = patch
 					maxTime = date
-					tag = m[0][1] + '.' + m[0][2] + '.' + m[0][3] + m[0][4]
+					tag = m[0][1] + m[0][2] + '.' + m[0][3] + m[0][4]
 				} else if (patch == max && date > maxTime) {
 					maxTime = date
-					tag = m[0][1] + '.' + m[0][2] + '.' + m[0][3] + m[0][4]
+					tag = m[0][1] + m[0][2] + '.' + m[0][3] + m[0][4]
 				}
 			}
 		}
@@ -118,12 +118,12 @@ class Lib implements Serializable {
 		def version = ownVersion
 		int max = -1
 		for (int i = 0; i < data.length; i++) {
-			def m = data[i] =~ /<a href="[^"]*\/(\d+\.\d+)\.(\d+)-SNAPSHOT\/"[^>]*>/
+			def m = data[i] =~ /<a href="[^"]*\/(\d+\.\d+\.)(\d+)-SNAPSHOT\/"[^>]*>/
 			if (m && ownVersion.startsWith(m[0][1])) {
 				int patch = m[0][2] as Integer
 				if (patch > max) {
 					max = patch
-					version = m[0][1] + '.' + m[0][2] + '-SNAPSHOT'
+					version = m[0][1] + m[0][2] + '-SNAPSHOT'
 				}
 			}
 		}
