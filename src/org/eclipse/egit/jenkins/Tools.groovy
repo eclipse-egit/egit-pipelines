@@ -108,26 +108,30 @@ class Tools implements Serializable {
 	def void publishUpdateSite(String genie, String credentials, String sourceDirectory, String publishDirectory, String extraSource = null) {
 		def buildNumber = script.currentBuild.number;
 		script.sshagent ([credentials]) {
-			script.sh """
-					ssh ${genie}@projects-storage.eclipse.org rm -rf ${publishDirectory}-tmp${buildNumber}
-					ssh ${genie}@projects-storage.eclipse.org mkdir -p ${publishDirectory}-tmp${buildNumber}
-					scp -r ${sourceDirectory}/* ${genie}@projects-storage.eclipse.org:${publishDirectory}-tmp${buildNumber}
-				"""
-			if (extraSource) {
+			// Serialize concurrently running jobs to not overwrite the publishDirectory concurrently
+			def lockName = "${genie}-projects-storage-eclipse-org-" + publishDirectory.replace('/', '-')
+			script.lock(lockName) {
 				script.sh """
-					scp ${extraSource} ${genie}@projects-storage.eclipse.org:${publishDirectory}-tmp${buildNumber}/
-				"""
+						ssh ${genie}@projects-storage.eclipse.org rm -rf ${publishDirectory}-tmp${buildNumber}
+						ssh ${genie}@projects-storage.eclipse.org mkdir -p ${publishDirectory}-tmp${buildNumber}
+						scp -r ${sourceDirectory}/* ${genie}@projects-storage.eclipse.org:${publishDirectory}-tmp${buildNumber}
+					"""
+				if (extraSource) {
+					script.sh """
+						scp ${extraSource} ${genie}@projects-storage.eclipse.org:${publishDirectory}-tmp${buildNumber}/
+					"""
+				}
+				// Remove former -old directory. There shouldn't be one, but let's be sure.
+				// Ensure the publishDirectory exists before moving it to -old.
+				// Then rename -tmp and remove -old.
+				script.sh """
+						ssh ${genie}@projects-storage.eclipse.org rm -rf ${publishDirectory}-old
+						ssh ${genie}@projects-storage.eclipse.org mkdir -p ${publishDirectory}
+						ssh ${genie}@projects-storage.eclipse.org mv ${publishDirectory} ${publishDirectory}-old
+						ssh ${genie}@projects-storage.eclipse.org mv ${publishDirectory}-tmp${buildNumber} ${publishDirectory}
+						ssh ${genie}@projects-storage.eclipse.org rm -rf ${publishDirectory}-old
+					"""
 			}
-			// Remove former -old directory. There shouldn't be one, but let's be sure.
-			// Ensure the publishDirectory exists before moving it to -old.
-			// Then rename -tmp and remove -old.
-			script.sh """
-					ssh ${genie}@projects-storage.eclipse.org rm -rf ${publishDirectory}-old
-					ssh ${genie}@projects-storage.eclipse.org mkdir -p ${publishDirectory}
-					ssh ${genie}@projects-storage.eclipse.org mv ${publishDirectory} ${publishDirectory}-old
-					ssh ${genie}@projects-storage.eclipse.org mv ${publishDirectory}-tmp${buildNumber} ${publishDirectory}
-					ssh ${genie}@projects-storage.eclipse.org rm -rf ${publishDirectory}-old
-				"""
 		}
 	}
 
