@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edecb20d_74526c7c",
+        "filename": "src/org/eclipse/egit/jenkins/Tools.groovy",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-09-23T22:38:45Z",
+      "side": 1,
+      "message": "it looks like we could shorten the critical section to not include this handling of the tmp directories since the buildNumber should be different for each build. Or did I miss something ?",
+      "revId": "1fa2683060008020fff001737ebd3c8f8f20ef89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
+    }
+  ]
+}
