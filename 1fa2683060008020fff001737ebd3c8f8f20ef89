@@ -16,6 +16,24 @@
       "revId": "1fa2683060008020fff001737ebd3c8f8f20ef89",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a98eae_98ea7efe",
+        "filename": "src/org/eclipse/egit/jenkins/Tools.groovy",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2020-09-25T20:53:31Z",
+      "side": 1,
+      "message": "If we have no two different job definitions publishing to the same place, yes. IIRC we had that in the JGit builds a while ago, while master and the latest stable-5.x had the same version in the POMs? Then the build number could come from different Jenkins job definitions and thus be the same for two different builds.\n\nFor the way we build EGit, yes, all the moving to -tmp${buildNumber} could be moved out of the critical section.",
+      "parentUuid": "edecb20d_74526c7c",
+      "revId": "1fa2683060008020fff001737ebd3c8f8f20ef89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": true
     }
   ]
 }
