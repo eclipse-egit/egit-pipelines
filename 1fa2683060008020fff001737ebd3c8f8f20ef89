@@ -34,6 +34,24 @@
       "revId": "1fa2683060008020fff001737ebd3c8f8f20ef89",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "471638da_764e8fe4",
+        "filename": "src/org/eclipse/egit/jenkins/Tools.groovy",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2020-09-26T22:47:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14a98eae_98ea7efe",
+      "revId": "1fa2683060008020fff001737ebd3c8f8f20ef89",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31",
+      "unresolved": false
     }
   ]
 }
