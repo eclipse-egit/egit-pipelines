@@ -47,7 +47,7 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				tooling.cloneAndCheckout(config.repoPath, env.GERRIT_BRANCH, '+refs/heads/*:refs/remotes/origin/*');
 			}
 			def ownVersion = lib.getOwnVersion('pom.xml')
-			def publishFolder = "/${publishRoot}/" + lib.getPublishFolder(ownVersion)
+			def publishFolder = "/${config.publishRoot}/" + lib.getPublishFolder(ownVersion)
 			def publishDirectory = '/home/data/httpd/download.eclipse.org' + publishFolder
 			def upstreamVersion = config.upstreamVersion
 			if (!upstreamVersion) {
