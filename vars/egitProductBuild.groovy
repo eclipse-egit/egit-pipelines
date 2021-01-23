@@ -34,6 +34,7 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		p2project : 'org.eclipse.egit.repository',
 		p2zip : 'org.eclipse.egit.repository-*.zip',
 		publishRoot : 'egit',
+		jdk : 'adoptopenjdk-hotspot-jdk8-latest'
 		// downstreamJob from cfg
 	]
 	productBuild(lib, tooling, config << cfg)

@@ -39,11 +39,16 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		// downstreamJob is optional: job to trigger after deployment
 	])
 	uiNode(config.timeOut) {
-		if (!env.GERRIT_BRANCH) {
-			env.GERRIT_BRANCH = config.defaultBranch
-		}
 		try {
+			if (!env.GERRIT_BRANCH) {
+				env.GERRIT_BRANCH = config.defaultBranch
+			}
+			if (config.jdk) {
+				def jdk = tool name: "${config.jdk}", type: 'jdk'
+				env.JAVA_HOME = "${jdk}"
+			}
 			stage('Checkout') {
+				sh '$JAVA_HOME/bin/java -version'
 				tooling.cloneAndCheckout(config.repoPath, env.GERRIT_BRANCH, '+refs/heads/*:refs/remotes/origin/*');
 			}
 			def ownVersion = lib.getOwnVersion('pom.xml')

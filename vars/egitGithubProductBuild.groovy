@@ -34,7 +34,8 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		upstreamVersion: params.EGIT_VERSION,
 		p2project : 'org.eclipse.mylyn.github-site',
 		p2zip : 'github-updatesite-*.zip',
-		publishRoot : 'egit/github'
+		publishRoot : 'egit/github',
+		jdk : 'adoptopenjdk-hotspot-jdk8-latest'
 	]
 	productBuild(lib, tooling, config << cfg)
 }

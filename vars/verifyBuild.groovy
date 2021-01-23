@@ -39,7 +39,12 @@ def call(def lib, def tooling, Map cfg = [:]) {
 			if (!env.GERRIT_BRANCH) {
 				env.GERRIT_BRANCH = config.defaultBranch
 			}
+			if (config.jdk) {
+				def jdk = tool name: "${config.jdk}", type: 'jdk'
+				env.JAVA_HOME = "${jdk}"
+			}
 			stage('Checkout') {
+				sh '$JAVA_HOME/bin/java -version'
 				tooling.cloneAndCheckout(config.repoPath, env.GERRIT_BRANCH, '$GERRIT_REFSPEC', [
 					extensions: [
 						[$class: 'BuildChooserSetting',
