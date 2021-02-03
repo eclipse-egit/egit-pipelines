@@ -132,7 +132,7 @@ class Lib implements Serializable {
 
 	private def String getTags(String url) {
 		def cmd = "git ls-remote --tags --refs ${url}"
-		if (isUnix()) {
+		if (script.isUnix()) {
 			return script.sh(returnStdout: true, script: cmd)
 		} else {
 			return script.bat(returnStdout: true, script: '@' + cmd)
