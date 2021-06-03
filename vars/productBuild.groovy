@@ -24,7 +24,7 @@
  * @return
  */
 def call(def lib, def tooling, Map cfg = [:]) {
-	Map config = [timeOut : 60] << cfg
+	Map config = [timeOut : 60, noTests : false] << cfg
 	// Check parameters
 	lib.configCheck(config, [
 		timeOut : 'Job timeout in minutes, default 60',
@@ -58,8 +58,10 @@ def call(def lib, def tooling, Map cfg = [:]) {
 			if (!upstreamVersion) {
 				upstreamVersion = lib.getUpstreamVersion(config.upstreamRepoPath, config.upstreamRepo, ownVersion)
 			}
+			def profiles = config.noTests ? '' : 'static-checks,'
+			profiles += 'other-os,eclipse-sign'
 			def commonMvnArguments = [
-				'-Pstatic-checks,other-os,eclipse-sign',
+				'-P' + profiles,
 				lib.getMvnUpstreamRepo(config.upstreamRepo, upstreamVersion),
 				// Needed by tycho-eclipserun for the p2 mirrors URL
 				"-DPUBLISH_FOLDER=${publishFolder}"
@@ -70,6 +72,9 @@ def call(def lib, def tooling, Map cfg = [:]) {
 					'install'
 				]
 				arguments.addAll(commonMvnArguments)
+				if (config.noTests) {
+					arguments.add('-DskipTests=true')
+				}
 				tooling.maven(arguments)
 			}
 			stage('Deploy') {
@@ -106,9 +111,12 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		}
 		finally { // replacement for post actions of Jenkins 1.x
 			stage('Results') {
-				tooling.reporting([
+				tooling.archiveArtifacts([
 					config.p2project + '/target/repository/**'
 				])
+				if (!config.noTests) {
+					tooling.reporting()
+				}
 			}
 			tooling.sendMail('egit-build@eclipse.org')
 		}

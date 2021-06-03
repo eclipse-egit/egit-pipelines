@@ -23,7 +23,7 @@
  * @return
  */
 def call(def lib, def tooling, Map cfg = [:]) {
-	Map config = [timeOut : 60] << cfg
+	Map config = [timeOut : 60, noTests : false] << cfg
 	// Check parameters
 	lib.configCheck(config, [
 		timeOut : 'Job timeout in minutes, default 60',
@@ -59,20 +59,28 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				if (!upstreamVersion) {
 					upstreamVersion = lib.getUpstreamVersion(config.upstreamRepoPath, config.upstreamRepo, ownVersion)
 				}
+				def profiles = config.noTests ? '' : 'static-checks,'
+				profiles += 'other-os,eclipse-sign'
 				def arguments = [
 					'clean',
 					'install',
-					'-Pstatic-checks,other-os,eclipse-sign',
+					'-P' + profiles,
 					lib.getMvnUpstreamRepo(config.upstreamRepo, upstreamVersion)
 				]
+				if (config.noTests) {
+					arguments.add('-DskipTests=true')
+				}
 				tooling.maven(arguments)
 			}
 		}
 		finally { // replacement for post actions of Jenkins 1.x
 			stage('Results') {
-				tooling.reporting([
+				tooling.archiveArtifacts([
 					config.p2project + '/target/repository/**'
 				])
+				if (!config.noTests) {
+					tooling.reporting()
+				}
 			}
 		}
 	}
