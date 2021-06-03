@@ -136,16 +136,13 @@ class Tools implements Serializable {
 	}
 
 	/**
-	 * Standard EGit build reporting steps, including artifact archiving.
+	 * Archives build artifacts. Screenshots from failed tests and Eclipse logs are added automatically.
 	 *
 	 * @param specificArtifacts
 	 * 		Collection of ${WORKSPACE}-relative ant patterns defining the artifacts to archive;
 	 * 		screenshots and Eclipse log files are added automatically
 	 */
-	def void reporting(Collection specificArtifacts = []) {
-		// don't use ** if the number of directories is known, this is a huge performance problem
-		script.junit '*/target/surefire-reports/*.xml'
-
+	def void archiveArtifacts(Collection specificArtifacts = []) {
 		def artifacts = []
 		artifacts.addAll(specificArtifacts)
 		artifacts.addAll([
@@ -153,6 +150,14 @@ class Tools implements Serializable {
 			'*/target/work/data/.metadata/*log',
 		])
 		script.archiveArtifacts artifacts.join(',')
+	}
+
+	/**
+	 * Standard EGit build reporting steps.
+	 */
+	def void reporting() {
+		// don't use ** if the number of directories is known, this is a huge performance problem
+		script.junit '*/target/surefire-reports/*.xml'
 
 		// TODO replace by warnings-next-generation once it is installed
 		script.findbugs pattern: '*/target/*bugsXml.xml', defaultEncoding: 'UTF-8'
