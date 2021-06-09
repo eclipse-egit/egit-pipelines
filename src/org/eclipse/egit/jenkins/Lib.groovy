@@ -80,7 +80,7 @@ class Lib implements Serializable {
 		if (ownVersion.endsWith('-SNAPSHOT')) {
 			return getUpstreamSnapshotVersion(upstreamProject, ownVersion)
 		}
-		def tags = getTags("git://git.eclipse.org/gitroot/${upstreamRepoPath}/${upstreamProject}.git").trim().split(/\v+/)
+		def tags = getTags("https://git.eclipse.org/r/${upstreamRepoPath}/${upstreamProject}").trim().split(/\v+/)
 		def tag = ''
 		int max = -1
 		long maxTime = -1

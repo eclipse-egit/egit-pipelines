@@ -81,7 +81,7 @@ class Tools implements Serializable {
 			doGenerateSubmoduleConfigurations: false,
 			submoduleCfg: [],
 			userRemoteConfigs: [
-				[url : "git://git.eclipse.org/gitroot/${project}.git", name : 'origin', refspec : refSpec]
+				[url : "https://git.eclipse.org/r/${project}", name : 'origin', refspec : refSpec]
 			]
 		]
 		for (extra in extras) {
