@@ -31,8 +31,7 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		upstreamRepoPath : 'egit',
 		upstreamRepo : 'egit',
 		upstreamVersion: params.EGIT_VERSION,
-		p2project : 'org.eclipse.mylyn.github-site',
-		jdk : 'adoptopenjdk-hotspot-jdk8-latest'
+		p2project : 'org.eclipse.mylyn.github-site'
 	]
 	verifyBuild(lib, tooling, config << cfg)
 }
