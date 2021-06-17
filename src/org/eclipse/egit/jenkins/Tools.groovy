@@ -46,7 +46,7 @@ class Tools implements Serializable {
 			]
 		}
 		if (branches instanceof String) {
-			branchSpecs.add([$class: "Branch", compareType: "PLAIN", pattern: b])
+			branchSpecs.add([$class: "Branch", compareType: "PLAIN", pattern: branches])
 		} else {
 			for (b in branches) {
 				if (b instanceof Collection && b.size() == 2) {

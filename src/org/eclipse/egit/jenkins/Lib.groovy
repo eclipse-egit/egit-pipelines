@@ -165,13 +165,15 @@ class Lib implements Serializable {
 	/**
 	 * Determines the folder to publish to.
 	 *
+	 * @param branch
+	 * 		branch we're building
 	 * @param ownVersion
 	 * 		version of the project being built
 	 * @return The subfolder name to publish the p2 repo to
 	 */
-	def String getPublishFolder(String ownVersion) {
+	def String getPublishFolder(String branch, String ownVersion) {
 		if (ownVersion.endsWith('-SNAPSHOT')) {
-			if (script.env.GERRIT_BRANCH.contains('master')) {
+			if (branch.contains('master')) {
 				return 'updates-nightly';
 			} else {
 				// We only ever build the last release or master, so two directories are sufficient
