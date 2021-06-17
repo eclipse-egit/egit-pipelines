@@ -13,7 +13,7 @@
 
 /**
  * EGit product build for a given branch, either determined by the gerrit trigger's
- * $GERRIT_BRANCH or the {@code cfg.defaultBranch}.
+ * $GERRIT_BRANCH or $GERRIT_REFNAME or the {@code cfg.defaultBranch}.
  *
  * @param lib
  * 		library to use
@@ -29,7 +29,7 @@ def call(def lib, def tooling, Map cfg = [:]) {
 	lib.configCheck(config, [
 		timeOut : 'Job timeout in minutes, default 60',
 		repoPath : 'Full path to the repository to build, for instance "egit/egit".',
-		// defaultBranch is optional: branch to build if $GERRIT_BRANCH is not set
+		// defaultBranch is optional: branch to build if $GERRIT_BRANCH and $GERRIT_REFNAME are not set
 		upstreamRepoPath: 'Path to the upstream repo, for instance the first "jgit" for "jgit/jgit".',
 		upstreamRepo: 'Upstream repository name, for instance the second "jgit" for "jgit/jgit".',
 		// upstreamVersion is optional; auto-determined if not set
@@ -40,8 +40,18 @@ def call(def lib, def tooling, Map cfg = [:]) {
 	])
 	uiNode(config.timeOut) {
 		try {
-			if (!env.GERRIT_BRANCH) {
-				env.GERRIT_BRANCH = config.defaultBranch
+			// If run on a RefChanged event, GERRIT_BRANCH is not set, but GERRIT_REFNAME is.
+			// If run on a ChangeMerged event, GERRIT_BRANCH is set, but GERRIT_REFNAME is not.
+			def branchToBuild = null
+			if (!env.GERRIT_BRANCH && !env.GERRIT_REFNAME) {
+				branchToBuild = config.defaultBranch
+			} else if (!!env.GERRIT_BRANCH) {
+				branchToBuild = env.GERRIT_BRANCH
+			} else if (!!env.GERRIT_REFNAME) {
+				branchToBuild = env.GERRIT_REFNAME
+			}
+			if (!branchToBuild) {
+				branchToBuild = config.defaultBranch
 			}
 			if (config.jdk) {
 				def jdk = tool name: "${config.jdk}", type: 'jdk'
@@ -49,10 +59,10 @@ def call(def lib, def tooling, Map cfg = [:]) {
 			}
 			stage('Checkout') {
 				sh '$JAVA_HOME/bin/java -version'
-				tooling.cloneAndCheckout(config.repoPath, env.GERRIT_BRANCH, '+refs/heads/*:refs/remotes/origin/*');
+				tooling.cloneAndCheckout(config.repoPath, branchToBuild, '+refs/heads/*:refs/remotes/origin/*');
 			}
 			def ownVersion = lib.getOwnVersion('pom.xml')
-			def publishFolder = "/${config.publishRoot}/" + lib.getPublishFolder(ownVersion)
+			def publishFolder = "/${config.publishRoot}/" + lib.getPublishFolder(branchToBuild, ownVersion)
 			def publishDirectory = '/home/data/httpd/download.eclipse.org' + publishFolder
 			def upstreamVersion = config.upstreamVersion
 			if (!upstreamVersion) {
