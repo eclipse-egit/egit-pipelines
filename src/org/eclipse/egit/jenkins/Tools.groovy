@@ -159,9 +159,12 @@ class Tools implements Serializable {
 		// don't use ** if the number of directories is known, this is a huge performance problem
 		script.junit '*/target/surefire-reports/*.xml'
 
-		// TODO replace by warnings-next-generation once it is installed
-		script.findbugs pattern: '*/target/*bugsXml.xml', defaultEncoding: 'UTF-8'
-		script.dry defaultEncoding: 'UTF-8'
+		script.recordIssues(
+			tools: [
+				spotBugs(pattern: '*/target/*bugsXml.xml', defaultEncoding: 'UTF-8'),
+				cpd(defaultEncoding: 'UTF-8')
+			]
+		)
 	}
 
 	/**
