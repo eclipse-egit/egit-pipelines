@@ -18,6 +18,23 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f9427db4_83a2bdf8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-20T12:23:32Z",
+      "side": 1,
+      "message": "See https://git.eclipse.org/r/c/egit/egit-pipelines/+/194304 .",
+      "revId": "ca7c544b41fd7100bfe5570f4b9788e4553b123d",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d8a461b_26155669",
