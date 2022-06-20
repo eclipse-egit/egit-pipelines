@@ -29,11 +29,8 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		timeOut : 30,
 		repoPath : 'egit/egit-github',
 		// defaultBranch from cfg
-		upstreamRepoPath : 'egit',
-		upstreamRepo : 'egit',
-		upstreamVersion: params.EGIT_VERSION,
-		p2project : 'org.eclipse.mylyn.github-site',
-		p2zip : 'github-updatesite-*.zip',
+		p2project : 'org.eclipse.egit.github.repository',
+		p2zip : 'org.eclipse.egit.github.repository-*.zip',
 		publishRoot : 'egit/github'
 	]
 	productBuild(lib, tooling, config << cfg)

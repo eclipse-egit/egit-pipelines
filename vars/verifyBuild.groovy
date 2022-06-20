@@ -29,8 +29,8 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		timeOut : 'Job timeout in minutes, default 60',
 		repoPath : 'Full path to the repository to build, for instance "egit/egit".',
 		// defaultBranch is optional: branch to build if $GERRIT_BRANCH is not set
-		upstreamRepoPath : 'Path to the upstream repo, for instance the first "jgit" for "jgit/jgit".',
-		upstreamRepo : 'Upstream repository name, for instance the second "jgit" for "jgit/jgit".',
+		// optional: upstreamRepoPath : 'Path to the upstream repo, for instance the first "jgit" for "jgit/jgit".',
+		// optional: upstreamRepo : 'Upstream repository name, for instance the second "jgit" for "jgit/jgit".',
 		// upstreamVersion is optional; auto-determined if not set
 		p2project : 'Project containing the built update site at target/repository.',
 	])
@@ -54,19 +54,22 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				])
 			}
 			stage('Build') {
-				def ownVersion = lib.getOwnVersion('pom.xml')
-				def upstreamVersion = config.upstreamVersion
-				if (!upstreamVersion) {
-					upstreamVersion = lib.getUpstreamVersion(config.upstreamRepoPath, config.upstreamRepo, ownVersion)
-				}
 				def profiles = config.noTests ? '' : 'static-checks,'
 				profiles += 'other-os,eclipse-sign'
 				def arguments = [
 					'clean',
 					'install',
-					'-P' + profiles,
-					lib.getMvnUpstreamRepo(config.upstreamRepo, upstreamVersion)
+					'-P' + profiles
 				]
+				def upstreamRepo = config.upstreamRepo;
+				if (!!upstreamRepo) {
+					def ownVersion = lib.getOwnVersion('pom.xml')
+					def upstreamVersion = config.upstreamVersion
+					if (!upstreamVersion) {
+						upstreamVersion = lib.getUpstreamVersion(config.upstreamRepoPath, upstreamRepo, ownVersion)
+					}
+					arguments.add(lib.getMvnUpstreamRepo(upstreamRepo, upstreamVersion))
+				}
 				if (config.noTests) {
 					arguments.add('-DskipTests=true')
 				}

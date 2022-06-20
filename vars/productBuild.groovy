@@ -30,8 +30,8 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		timeOut : 'Job timeout in minutes, default 60',
 		repoPath : 'Full path to the repository to build, for instance "egit/egit".',
 		// defaultBranch is optional: branch to build if $GERRIT_BRANCH and $GERRIT_REFNAME are not set
-		upstreamRepoPath: 'Path to the upstream repo, for instance the first "jgit" for "jgit/jgit".',
-		upstreamRepo: 'Upstream repository name, for instance the second "jgit" for "jgit/jgit".',
+		// optional: upstreamRepoPath: 'Path to the upstream repo, for instance the first "jgit" for "jgit/jgit".',
+		// optional: upstreamRepo: 'Upstream repository name, for instance the second "jgit" for "jgit/jgit".',
 		// upstreamVersion is optional; auto-determined if not set
 		p2project: 'Project containing the built update site at target/repository.',
 		// p2zip is optional: p2 repo zip to also copy during deployment,
@@ -64,18 +64,23 @@ def call(def lib, def tooling, Map cfg = [:]) {
 			def ownVersion = lib.getOwnVersion('pom.xml')
 			def publishFolder = "/${config.publishRoot}/" + lib.getPublishFolder(branchToBuild, ownVersion)
 			def publishDirectory = '/home/data/httpd/download.eclipse.org' + publishFolder
-			def upstreamVersion = config.upstreamVersion
-			if (!upstreamVersion) {
-				upstreamVersion = lib.getUpstreamVersion(config.upstreamRepoPath, config.upstreamRepo, ownVersion)
-			}
+
 			def profiles = config.noTests ? '' : 'static-checks,'
 			profiles += 'other-os,eclipse-sign'
 			def commonMvnArguments = [
 				'-P' + profiles,
-				lib.getMvnUpstreamRepo(config.upstreamRepo, upstreamVersion),
 				// Needed by tycho-eclipserun for the p2 mirrors URL
 				"-DPUBLISH_FOLDER=${publishFolder}"
 			]
+			def upstreamRepo = config.upstreamRepo
+			if (!!upstreamRepo) {
+				def upstreamVersion = config.upstreamVersion
+				if (!upstreamVersion) {
+					upstreamVersion = lib.getUpstreamVersion(config.upstreamRepoPath, upstreamRepo, ownVersion)
+				}
+				commonMvnArguments.add(lib.getMvnUpstreamRepo(upstreamRepo, upstreamVersion))
+			}
+
 			stage('Build') {
 				def arguments = [
 					'clean',
