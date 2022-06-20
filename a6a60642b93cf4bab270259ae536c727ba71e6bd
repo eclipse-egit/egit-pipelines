@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3431b28a_2a63322e",
+        "filename": "vars/egitGithubProductBuild.groovy",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-20T11:01:39Z",
+      "side": 0,
+      "message": "I think these are currently mandatory. Would have to be made optional so that we can omit them for egit-github.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 14
+      },
+      "revId": "a6a60642b93cf4bab270259ae536c727ba71e6bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f58546a0_a8ec465e",
+        "filename": "vars/egitGithubVerifyBuild.groovy",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-20T11:01:39Z",
+      "side": 0,
+      "message": "I think currently these two are mandatory...",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 24
+      },
+      "revId": "a6a60642b93cf4bab270259ae536c727ba71e6bd",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
