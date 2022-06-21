@@ -69,6 +69,24 @@
       "parentUuid": "c44d70f0_03a62f12",
       "revId": "9397f5fded6560811abc1946de5785f626811232",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f1cf3048_8bbeb903",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-21T17:11:00Z",
+      "side": 1,
+      "message": "And it looks as if the centos-7 problem is fixed now, too. At least an egit.gerrit build works again.[1]\n\n[1] https://ci.eclipse.org/egit/job/egit.gerrit/2692/console",
+      "parentUuid": "30a63f49_82d52aa1",
+      "revId": "9397f5fded6560811abc1946de5785f626811232",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
