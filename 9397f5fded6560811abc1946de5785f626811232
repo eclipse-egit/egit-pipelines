@@ -16,6 +16,23 @@
       "message": "* EGit-Github build[1] ran with this and worked. (Changed p2 names, no upstream repo)\n* EGit build[2] ran with this and worked. (Uses an upstream repo.)\n\n[1] https://ci.eclipse.org/egit/job/egit-github.gerrit/224/\n[2] https://ci.eclipse.org/egit/job/thomas-test/84/",
       "revId": "9397f5fded6560811abc1946de5785f626811232",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "361b2226_9cf0ef10",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2022-06-21T15:53:41Z",
+      "side": 1,
+      "message": "What happened here ?\nhttps://ci.eclipse.org/egit/job/egit-github.gerrit/225/console\nI expected the build to succeed after this change was submitted ...",
+      "revId": "9397f5fded6560811abc1946de5785f626811232",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
