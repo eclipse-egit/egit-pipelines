@@ -33,6 +33,24 @@
       "message": "What happened here ?\nhttps://ci.eclipse.org/egit/job/egit-github.gerrit/225/console\nI expected the build to succeed after this change was submitted ...",
       "revId": "9397f5fded6560811abc1946de5785f626811232",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c44d70f0_03a62f12",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-21T16:36:31Z",
+      "side": 1,
+      "message": "So would I.\n\nThe log says:\n\n  Candidate partial match: refs/changes/04/194304/1 revision 9397f5fded6560811abc1946de5785f626811232\n  Candidate partial match: refs/heads/master revision 9397f5fded6560811abc1946de5785f626811232\n  Cannot resolve ambiguous short revision 9397f5fd\n  \nLooks like a bug in that pipeline loading library. Even if it finds multiple refs it should be OK if they all point to the same commit.\n\nI\u0027ll create a tag and push that, then change the Jenkins jobs to use that tag.\n\nBut note [1] and [2]: currently the Eclipse CI infra has severe problems with the centos-7 Jenkins slaves anyway. So even if that is fixed, a build is unlikely to\nsucceed right now.\n\n[1] https://www.eclipse.org/lists/cross-project-issues-dev/msg19274.html\n[2] https://gitlab.eclipse.org/eclipsefdn/helpdesk/-/issues/1443",
+      "parentUuid": "361b2226_9cf0ef10",
+      "revId": "9397f5fded6560811abc1946de5785f626811232",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
