@@ -51,6 +51,24 @@
       "parentUuid": "361b2226_9cf0ef10",
       "revId": "9397f5fded6560811abc1946de5785f626811232",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "30a63f49_82d52aa1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2022-06-21T16:49:32Z",
+      "side": 1,
+      "message": "Done. New tag \"v0.2.0\", and adapted egit.gerrit, egit-stable.gerrit, egit-github.gerrit, egit, egit-stable, and egit-github builds to use it.\n\negit-github-stable builds not changed (yet). If we need it, we can do that, too.",
+      "parentUuid": "c44d70f0_03a62f12",
+      "revId": "9397f5fded6560811abc1946de5785f626811232",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
