@@ -24,7 +24,7 @@
  * @return
  */
 def call(def lib, def tooling, Map cfg = [:]) {
-	Map config = [timeOut : 60, noTests : false] << cfg
+	Map config = [timeOut : 60, noTests : false, jdk : 'temurin-jdk17-latest', gpg : false] << cfg
 	// Check parameters
 	lib.configCheck(config, [
 		timeOut : 'Job timeout in minutes, default 60',
@@ -58,7 +58,7 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				env.JAVA_HOME = "${jdk}"
 			}
 			stage('Checkout') {
-				sh '$JAVA_HOME/bin/java -version'
+				sh 'echo $JAVA_HOME; java -version'
 				tooling.cloneAndCheckout(config.repoPath, branchToBuild, '+refs/heads/*:refs/remotes/origin/*');
 			}
 			def ownVersion = lib.getOwnVersion('pom.xml')
@@ -81,6 +81,25 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				commonMvnArguments.add(lib.getMvnUpstreamRepo(upstreamRepo, upstreamVersion))
 			}
 
+			stage('Initialize PGP') {
+				when {
+					expression { !!config.gpg }
+				}
+				steps {
+					withCredentials([
+						file(credentialsId: 'secret-subkeys.asc', variable: 'KEYRING')
+					]) {
+						sh '''
+							gpg --batch --import "${KEYRING}"
+							for fpr in $(gpg --list-keys --with-colons \
+								| awk -F: \'/fpr:/ {print $10}\' \
+								| sort -u); do echo -e "5\ny\n" \
+								|  gpg --batch --command-fd 0 --expert --edit-key ${fpr} trust; \
+							done
+						'''
+					}
+				}
+			}
 			stage('Build') {
 				def arguments = [
 					'clean',
@@ -90,7 +109,17 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				if (config.noTests) {
 					arguments.add('-DskipTests=true')
 				}
-				tooling.maven(arguments)
+				if (config.gpg) {
+					withCredentials([
+						string(credentialsId: 'gpg-passphrase', variable: 'EGIT_KEYRING_PASSPHRASE')
+					]) {
+						arguments.add('-Pgpg-sign')
+
+						tooling.maven(arguments)
+					}
+				} else {
+					tooling.maven(arguments)
+				}
 			}
 			stage('Deploy') {
 				// Nexus
@@ -124,7 +153,8 @@ def call(def lib, def tooling, Map cfg = [:]) {
 						])
 			}
 		}
-		finally { // replacement for post actions of Jenkins 1.x
+		finally {
+			// replacement for post actions of Jenkins 1.x
 			stage('Results') {
 				tooling.archiveArtifacts([
 					config.p2project + '/target/repository/**'
