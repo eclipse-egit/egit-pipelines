@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d981464_fb364b40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-22T20:50:56Z",
+      "side": 1,
+      "message": "@Matthias: this is ready for review now.\n\nIn https://ci.eclipse.org/egit/job/thomas-test/92/ , this succeeded in building EGit (I skipped the tests) change https://git.eclipse.org/r/c/egit/egit/+/201962/4 . Compiler and ran with Java 17, generated class have version 55.0 (Java 11).\n\nChanges:\n* Set temurin-jdk17-latest by default to run the build (can be overridden via config \u0027jdk\u0027).\n* pass the GPG passphrase via an environment variable, not via the command line (less risk of it getting exposed in a build log, though Jenkins\u0027 masking seems to be fairly clever).\n* introduce a config flag \"gpg\" so that we can switch it on or off. (On for EGit by default.)\n",
+      "revId": "28d94eeedcd0bfffde5a33b4c99b02bfabdaedf5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
