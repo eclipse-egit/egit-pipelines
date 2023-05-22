@@ -81,6 +81,18 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				commonMvnArguments.add(lib.getMvnUpstreamRepo(upstreamRepo, upstreamVersion))
 			}
 
+			stage('Initialize PGP') {
+				withCredentials([file(credentialsId: 'secret-subkeys.asc', variable: 'KEYRING')]) {
+					sh '''
+						gpg --batch --import "${KEYRING}"
+						for fpr in $(gpg --list-keys --with-colons \
+							| awk -F: \'/fpr:/ {print $10}\' \
+							| sort -u); do echo -e "5\ny\n" \
+							|  gpg --batch --command-fd 0 --expert --edit-key ${fpr} trust; \
+						done
+					'''
+				}
+			}
 			stage('Build') {
 				def arguments = [
 					'clean',
@@ -89,6 +101,10 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				arguments.addAll(commonMvnArguments)
 				if (config.noTests) {
 					arguments.add('-DskipTests=true')
+				}
+				withCredentials([string(credentialsId: 'gpg-passphrase', variable: 'KEYRING_PASSPHRASE')]) {
+					arguments.add('-Pgpg-sign')
+					arguments.add('-Dgpg.passphrase="${KEYRING_PASSPHRASE}"')
 				}
 				tooling.maven(arguments)
 			}
