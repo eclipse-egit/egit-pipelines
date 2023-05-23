@@ -18,6 +18,23 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e55fd852_5f2dd9ac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-23T07:21:18Z",
+      "side": 1,
+      "message": "Next step is to create and push a tag \"v0.3.0\", then change the library import in all EGit jobs on Jenkins from \"@0.2.0\" to \"@0.3.0\", so that the jobs actually use this version.\n\nI won\u0027t be able to do that before tonight, so if you want to continue with this, feel free to do so yourself.",
+      "revId": "28d94eeedcd0bfffde5a33b4c99b02bfabdaedf5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7c38ffe_008c9544",
