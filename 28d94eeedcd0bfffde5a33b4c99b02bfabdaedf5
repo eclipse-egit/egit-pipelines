@@ -71,6 +71,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d3f889f_11c7537d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-23T10:33:33Z",
+      "side": 1,
+      "message": "Baffles me. Do we have to add org.osgi.annotation to the target platform? But why?",
+      "parentUuid": "8669cd91_d344fd7a",
+      "revId": "28d94eeedcd0bfffde5a33b4c99b02bfabdaedf5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7c38ffe_008c9544",
