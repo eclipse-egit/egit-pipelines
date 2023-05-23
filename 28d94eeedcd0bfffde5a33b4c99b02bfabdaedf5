@@ -35,6 +35,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ba4f8a5b_ad8b79f1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-23T07:22:04Z",
+      "side": 1,
+      "message": "of course, change from \"@v0.2.0\" to \"@v0.3.0\".",
+      "parentUuid": "e55fd852_5f2dd9ac",
+      "revId": "28d94eeedcd0bfffde5a33b4c99b02bfabdaedf5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7c38ffe_008c9544",
