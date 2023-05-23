@@ -53,6 +53,24 @@
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8669cd91_d344fd7a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-05-23T09:01:14Z",
+      "side": 1,
+      "message": "I tagged v0.3.0 and updated the version used by the egit.gerrit job, this fails now in org.eclipse.egit.ui.test with this error\n\n```\n10:56:56  08:56:55 [ERROR] Cannot resolve project dependencies:\n10:56:56  08:56:55 [ERROR]   Software being installed: org.eclipse.pde.feature.group 3.14.1400.v20221123-1800\n10:56:56  08:56:55 [ERROR]   Missing requirement: org.eclipse.pde.feature.group 3.14.1400.v20221123-1800 requires \u0027org.eclipse.equinox.p2.iu; org.osgi.annotation.versioning 0.0.0\u0027 but it could not be found\n```",
+      "parentUuid": "ba4f8a5b_ad8b79f1",
+      "revId": "28d94eeedcd0bfffde5a33b4c99b02bfabdaedf5",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a7c38ffe_008c9544",
