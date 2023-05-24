@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdb205ae_ecde6a4f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-24T18:57:17Z",
+      "side": 1,
+      "message": "Yep. Thank you!\n\nVerified here: [1] (That build pulled the library from this Gerrit change.)\n\n[1] https://ci.eclipse.org/egit/job/egit.gerrit/2857/consoleFull",
+      "revId": "dcf4c56d3f471fd227f96a599c70699670094653",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    }
+  ]
+}
