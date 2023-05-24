@@ -161,8 +161,8 @@ class Tools implements Serializable {
 
 		script.recordIssues(
 			tools: [
-				script.spotBugs(pattern: '*/target/*bugsXml.xml', defaultEncoding: 'UTF-8'),
-				script.cpd(defaultEncoding: 'UTF-8')
+				script.spotBugs(pattern: '*/target/*bugsXml.xml', reportEncoding: 'UTF-8'),
+				script.cpd(reportEncoding: 'UTF-8')
 			]
 		)
 	}
