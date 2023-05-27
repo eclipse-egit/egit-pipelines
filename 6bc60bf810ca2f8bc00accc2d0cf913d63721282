@@ -16,6 +16,23 @@
       "message": "It\u0027s definitely not necessary to version the pipeline afterwards. :) I\u0027m just trying to have a clean workspace...",
       "revId": "6bc60bf810ca2f8bc00accc2d0cf913d63721282",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "eb66e1d8_b7513876",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 44628
+      },
+      "writtenOn": "2023-05-27T19:18:35Z",
+      "side": 1,
+      "message": "Thanks.\n\nDefinitely no reason for a new version. The version tags are more a convenience for us anyway. Importing using \"@SHA\" works, too. I use that often enough to verify changes by running the pipeline from a Gerrit change.",
+      "revId": "6bc60bf810ca2f8bc00accc2d0cf913d63721282",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
