@@ -67,6 +67,9 @@ def call(def lib, def tooling, Map cfg = [:]) {
 
 			def profiles = config.noTests ? '' : 'static-checks,'
 			profiles += 'other-os,eclipse-sign'
+			if (config.gpg) {
+				profiles += ',gpg-sign'
+			}
 			def commonMvnArguments = [
 				'-P' + profiles,
 				// Needed by tycho-eclipserun for the p2 mirrors URL
@@ -112,8 +115,6 @@ def call(def lib, def tooling, Map cfg = [:]) {
 					withCredentials([
 						string(credentialsId: 'gpg-passphrase', variable: 'EGIT_KEYRING_PASSPHRASE')
 					]) {
-						arguments.add('-Pgpg-sign')
-
 						tooling.maven(arguments)
 					}
 				} else {
@@ -128,7 +129,15 @@ def call(def lib, def tooling, Map cfg = [:]) {
 					'-Dskip-ui-tests=true'
 				]
 				arguments.addAll(commonMvnArguments)
-				tooling.maven(arguments)
+				if (config.gpg) {
+					withCredentials([
+						string(credentialsId: 'gpg-passphrase', variable: 'EGIT_KEYRING_PASSPHRASE')
+					]) {
+						tooling.maven(arguments)
+					}
+				} else {
+					tooling.maven(arguments)
+				}
 				// Update site
 				def extraSource = null
 				if (config.p2zip && ownVersion.endsWith('-r')) {

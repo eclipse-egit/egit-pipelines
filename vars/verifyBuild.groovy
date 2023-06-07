@@ -74,6 +74,9 @@ def call(def lib, def tooling, Map cfg = [:]) {
 			stage('Build') {
 				def profiles = config.noTests ? '' : 'static-checks,'
 				profiles += 'other-os,eclipse-sign'
+				if (config.gpg) {
+					profiles += ',gpg-sign'
+				}
 				def arguments = [
 					'clean',
 					'install',
@@ -95,8 +98,6 @@ def call(def lib, def tooling, Map cfg = [:]) {
 					withCredentials([
 						string(credentialsId: 'gpg-passphrase', variable: 'EGIT_KEYRING_PASSPHRASE')
 					]) {
-						arguments.add('-Pgpg-sign')
-
 						tooling.maven(arguments)
 					}
 				} else {
