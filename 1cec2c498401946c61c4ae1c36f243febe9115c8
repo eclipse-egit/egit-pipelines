@@ -33,6 +33,24 @@
       "message": "verified this now works properly, problem was that \n- we should set option -P only once per maven call\n- the productBuild actually builds egit twice and we have to pass the passphrase in both cases",
       "revId": "1cec2c498401946c61c4ae1c36f243febe9115c8",
       "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b4516a61_0a8cf850",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 4
+      },
+      "writtenOn": "2023-06-07T22:12:09Z",
+      "side": 1,
+      "message": "I tagged the new pipeline version and updated the egit jobs to use it",
+      "parentUuid": "d3f8d7d6_4d513f9b",
+      "revId": "1cec2c498401946c61c4ae1c36f243febe9115c8",
+      "serverId": "97ee7c02-f12f-4043-b43e-dea463d88b31"
     }
   ]
 }
