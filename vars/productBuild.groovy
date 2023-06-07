@@ -67,6 +67,9 @@ def call(def lib, def tooling, Map cfg = [:]) {
 
 			def profiles = config.noTests ? '' : 'static-checks,'
 			profiles += 'other-os,eclipse-sign'
+			if (config.gpg) {
+				profiles += ',gpg-sign'
+			}
 			def commonMvnArguments = [
 				'-P' + profiles,
 				// Needed by tycho-eclipserun for the p2 mirrors URL
@@ -112,8 +115,6 @@ def call(def lib, def tooling, Map cfg = [:]) {
 					withCredentials([
 						string(credentialsId: 'gpg-passphrase', variable: 'EGIT_KEYRING_PASSPHRASE')
 					]) {
-						arguments.add('-Pgpg-sign')
-
 						tooling.maven(arguments)
 					}
 				} else {
