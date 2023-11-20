@@ -26,9 +26,9 @@
 def call(def lib, def tooling, Map cfg = [:]) {
 	Map config = [
 		timeOut : 60,
-		repoPath : 'egit/egit',
+		repoPath : 'eclipse-egit/egit',
 		// defaultBranch from cfg
-		upstreamRepoPath : 'jgit',
+		upstreamRepoPath : 'eclipse-jgit',
 		upstreamRepo : 'jgit',
 		// upstreamVersion from cfg or auto-determined
 		p2project : 'org.eclipse.egit.repository',

@@ -26,7 +26,7 @@
 def call(def lib, def tooling, Map cfg = [:]) {
 	Map config = [
 		timeOut : 30,
-		repoPath : 'egit/egit-github',
+		repoPath : 'eclipse-egit/egit-github',
 		// defaultBranch from cfg
 		p2project : 'org.eclipse.egit.github.repository'
 	]
