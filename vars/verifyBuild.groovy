@@ -27,10 +27,10 @@ def call(def lib, def tooling, Map cfg = [:]) {
 	// Check parameters
 	lib.configCheck(config, [
 		timeOut : 'Job timeout in minutes, default 60',
-		repoPath : 'Full path to the repository to build, for instance "egit/egit".',
+		repoPath : 'Full path to the repository to build, for instance "eclipse-egit/egit".',
 		// defaultBranch is optional: branch to build if $GERRIT_BRANCH is not set
-		// optional: upstreamRepoPath : 'Path to the upstream repo, for instance the first "jgit" for "jgit/jgit".',
-		// optional: upstreamRepo : 'Upstream repository name, for instance the second "jgit" for "jgit/jgit".',
+		// optional: upstreamRepoPath : 'Path to the upstream repo, for instance the first "eclipse-jgit" for "eclipse-jgit/jgit".',
+		// optional: upstreamRepo : 'Upstream repository name, for instance the second "jgit" for "eclipse-jgit/jgit".',
 		// upstreamVersion is optional; auto-determined if not set
 		p2project : 'Project containing the built update site at target/repository.',
 	])
