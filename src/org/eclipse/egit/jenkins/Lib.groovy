@@ -107,18 +107,18 @@ class Lib implements Serializable {
 		return tag
 	}
 
-	private def getUpstreamSnapshotVersion(String upstreamProject, String ownVersion) {
-		// Slightly ugly HTML slurping. Is there a better way?
-		// def url = new URL("https://repo.eclipse.org/content/unzip/snapshots.unzip/org/eclipse/" + upstreamProject + "/org.eclipse." + upstreamProject + ".repository/")
+	private def String getUpstreamSnapshotVersion(String upstreamProject, String ownVersion) {
+		// Slightly ugly XML slurping. Is there a better way?
+		// def url = new URL("...")
 		// def text = url.getText()
 		// The above new URL() is forbidden by Jenkins' script security...
-		def text = script.sh(returnStdout: true, script: "curl -s -f -m 10 -L --max-redirs 8 https://repo.eclipse.org/content/unzip/snapshots.unzip/org/eclipse/${upstreamProject}/org.eclipse.${upstreamProject}.repository/")
+		def text = script.sh(returnStdout: true, script: "curl -s -f -m 10 -L --max-redirs 8 https://repo.eclipse.org/repository/${upstreamProject}-maven2-snapshots/org/eclipse/${upstreamProject}/org.eclipse.${upstreamProject}/maven-metadata.xml")
 		// TODO: Windows ?
 		def data = text.split(/\v+/)
 		def version = ownVersion
 		int max = -1
 		for (int i = 0; i < data.length; i++) {
-			def m = data[i] =~ /<a href="[^"]*\/(\d+\.\d+\.)(\d+)-SNAPSHOT\/"[^>]*>/
+			def m = data[i] =~ /<version>(\d+\.\d+\.)(\d+)-SNAPSHOT<\/version>/
 			if (m && ownVersion.startsWith(m[0][1])) {
 				int patch = m[0][2] as Integer
 				if (patch > max) {
@@ -149,17 +149,27 @@ class Lib implements Serializable {
 	 *
 	 * @return the complete maven command line option "-Djgit-site=" or "-Degit-site="
 	 */
-	def String getMvnUpstreamRepo(String project, String version) {
-		def repo = "-D${project}-site=https://repo.eclipse.org/content/unzip/"
+	def String getMvnUpstreamRepo(String project, String version, String targetDirectory) {
+		def repo = "https://repo.eclipse.org/repository/${project}-maven2"
 		if (version.endsWith('-SNAPSHOT')) {
-			repo += 'snapshots.unzip/org/eclipse/'
+			repo += '-snapshots'
 		} else {
-			repo += 'releases.unzip/org/eclipse/'
+			repo += '-releases'
 		}
-		repo += project
+		repo += "/org/eclipse/${project}"
 		def pkg = "org.eclipse.${project}.repository"
-		repo += "/${pkg}/${version}/${pkg}-${version}.zip-unzip/"
-		return repo
+		repo += "/${pkg}/${version}"
+		if (version.endsWith('-SNAPSHOT')) {
+			def file = repo + '/maven-metadata.xml'
+			def text = script.sh(returnStdout: true, script: "curl -s -f -m 10 -L --max-redirs 8 ${file}")
+			def m = text =~ /<extension>zip<\/extension>(?:\s|\r|\n)*<value>([^<]*)<\/value>/
+			repo += "/${pkg}-${m[0][1]}.zip"
+		} else {
+			repo += "/${pkg}-${version}.zip"
+		}
+		script.sh(script: "mkdir -p \"${targetDirectory}/upstreamp2\" && curl -f -m 360 -L --max-redirs 8 -o \"${targetDirectory}/upstream.zip\" ${repo} && which unzip")
+		script.unzip(zipFile: "${targetDirectory}/upstream.zip", dir: "${targetDirectory}/upstreamp2")
+		return "${targetDirectory}/upstreamp2"
 	}
 
 	/**
