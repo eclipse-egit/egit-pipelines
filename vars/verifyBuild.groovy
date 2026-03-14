@@ -89,7 +89,8 @@ def call(def lib, def tooling, Map cfg = [:]) {
 					if (!upstreamVersion) {
 						upstreamVersion = lib.getUpstreamVersion(config.upstreamRepoPath, upstreamRepo, ownVersion)
 					}
-					arguments.add(lib.getMvnUpstreamRepo(upstreamRepo, upstreamVersion))
+					def upstreamP2 = lib.getMvnUpstreamRepo(upstreamRepo, upstreamVersion, "${env.WORKSPACE}/target");
+					arguments.add("-D${upstreamRepo}-site=${upstreamP2}")
 				}
 				if (config.noTests) {
 					arguments.add('-DskipTests=true')
