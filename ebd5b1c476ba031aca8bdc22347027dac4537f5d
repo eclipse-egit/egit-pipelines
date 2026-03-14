@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f673fed_dc0f1edd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1021966
+      },
+      "writtenOn": "2026-03-14T23:54:21Z",
+      "side": 1,
+      "message": "This appears to work now. Build https://ci.eclipse.org/egit/job/egit.gerrit/3483/ is running with PS 7 of this change. Both the egit.gerrit and the egit.stable builds in Jenkins are currently set to pull this exact commit id (ebd5b1c4).\n\nHave to leave now; if all is well, I\u0027ll submit, tag, and update the job configs in Jenkins again.",
+      "revId": "ebd5b1c476ba031aca8bdc22347027dac4537f5d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
