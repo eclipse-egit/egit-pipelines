@@ -81,7 +81,8 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				if (!upstreamVersion) {
 					upstreamVersion = lib.getUpstreamVersion(config.upstreamRepoPath, upstreamRepo, ownVersion)
 				}
-				commonMvnArguments.add(lib.getMvnUpstreamRepo(upstreamRepo, upstreamVersion))
+				def upstreamP2 = lib.getMvnUpstreamRepo(upstreamRepo, upstreamVersion, "${env.WORKSPACE}/target");
+				commonMvnArguments.add("-D${upstreamRepo}-site=${upstreamP2}")
 			}
 
 			stage('Initialize PGP') {
