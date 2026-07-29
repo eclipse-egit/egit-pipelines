@@ -95,6 +95,9 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				if (config.noTests) {
 					arguments.add('-DskipTests=true')
 				}
+				if (config.noLicenseCheck) {
+					arguments.add('-Ddash.skip')
+				}
 				if (config.gpg) {
 					withCredentials([
 						string(credentialsId: 'gpg-passphrase', variable: 'EGIT_KEYRING_PASSPHRASE')
