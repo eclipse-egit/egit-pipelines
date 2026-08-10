@@ -55,7 +55,7 @@ def call(def lib, def tooling, Map cfg = [:]) {
 			}
 			stage('Build') {
 				def profiles = config.noTests ? '' : 'static-checks,'
-				profiles += 'other-os,eclipse-sign'
+				profiles += 'other-os'
 				def arguments = [
 					'clean',
 					'install',
