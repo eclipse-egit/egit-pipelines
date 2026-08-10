@@ -24,7 +24,7 @@ I-build (nightly development build for the next release), GDT will fail to
 install.
 
 The library is intended to be used for the [Jenkins builds](https://ci.eclipse.org/egit/)
-of the egit/egit and the egit/egit-github repositories.
+of the egit/egit repository.
 
 It provides several kinds of general pipelines that can be configured:
 
