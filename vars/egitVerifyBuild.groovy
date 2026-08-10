@@ -32,7 +32,7 @@ def call(def lib, def tooling, Map cfg = [:]) {
 		upstreamRepo : 'jgit',
 		// upstreamVersion from cfg or auto-determined
 		p2project : 'org.eclipse.egit.repository',
-		gpg : true
+		gpg : false
 	]
 	verifyBuild(lib, tooling, config << cfg)
 }
