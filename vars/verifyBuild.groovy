@@ -23,7 +23,7 @@
  * @return
  */
 def call(def lib, def tooling, Map cfg = [:]) {
-	Map config = [timeOut : 60, noTests : false, jdk : 'temurin-jdk21-latest', gpg : false] << cfg
+	Map config = [timeOut : 60, noTests : false, jdk : 'temurin-jdk21-latest'] << cfg
 	// Check parameters
 	lib.configCheck(config, [
 		timeOut : 'Job timeout in minutes, default 60',
@@ -53,30 +53,9 @@ def call(def lib, def tooling, Map cfg = [:]) {
 					]
 				])
 			}
-			stage('Initialize PGP') {
-				if (config.gpg) {
-					withCredentials([
-						file(credentialsId: 'secret-subkeys.asc', variable: 'KEYRING')
-					]) {
-						sh '''
-							gpg --batch --import "${KEYRING}"
-							for fpr in $(gpg --list-keys --with-colons \
-								| awk -F: \'/fpr:/ {print $10}\' \
-								| sort -u); do echo -e "5\ny\n" \
-								|  gpg --batch --command-fd 0 --expert --edit-key ${fpr} trust; \
-							done
-						'''
-					}
-				} else {
-					echo "No GPG setup"
-				}
-			}
 			stage('Build') {
 				def profiles = config.noTests ? '' : 'static-checks,'
 				profiles += 'other-os,eclipse-sign'
-				if (config.gpg) {
-					profiles += ',gpg-sign'
-				}
 				def arguments = [
 					'clean',
 					'install',
@@ -98,15 +77,7 @@ def call(def lib, def tooling, Map cfg = [:]) {
 				if (config.noLicenseCheck) {
 					arguments.add('-Ddash.skip')
 				}
-				if (config.gpg) {
-					withCredentials([
-						string(credentialsId: 'gpg-passphrase', variable: 'EGIT_KEYRING_PASSPHRASE')
-					]) {
-						tooling.maven(arguments)
-					}
-				} else {
-					tooling.maven(arguments)
-				}
+				tooling.maven(arguments)
 			}
 		}
 		finally {
