@@ -23,7 +23,7 @@
  * @return
  */
 def call(def lib, def tooling, Map cfg = [:]) {
-	Map config = [timeOut : 60, noTests : false, jdk : 'temurin-jdk21-latest'] << cfg
+	Map config = [timeOut : 60, noTests : false, jdk : 'temurin-jdk25-latest'] << cfg
 	// Check parameters
 	lib.configCheck(config, [
 		timeOut : 'Job timeout in minutes, default 60',
